@@ -1,5 +1,5 @@
 # Description
-# A Hubot script that display the latest ranking and movie info in nicovideo.
+# A Hubot script that select your life
 #
 # Dependencies:
 # - moment
@@ -47,6 +47,7 @@ module.exports = (robot) ->
     words.push msg.match[1]
     words.push msg.match[2]
     question = robot.brain.get('question')
+    question = [null, null] if question == null
     if  ! (words.indexOf(question[0]) == -1) && ! (words.indexOf(question[1]) == -1)
       msg.send 'http://blog-imgs-42.fc2.com/c/a/t/cateriam/201304161641119e0.jpg'
     else
