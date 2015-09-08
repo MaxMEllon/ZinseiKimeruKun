@@ -3,8 +3,8 @@
 #
 # Dependencies:
 # - moment
-# - sleep
 # - fs
+# - step
 #
 # Configuration:
 #
@@ -16,7 +16,7 @@
 
 moment  = require 'moment'
 Fs      = require 'fs'
-sleeper = require 'sleep'
+step    = require 'step'
 
 config =
   path: process.env.HUBOT_FILE_BRAIN_PATH
@@ -50,12 +50,22 @@ module.exports = (robot) ->
     if  ! (words.indexOf(question[0]) == -1) && ! (words.indexOf(question[1]) == -1)
       msg.send 'http://blog-imgs-42.fc2.com/c/a/t/cateriam/201304161641119e0.jpg'
     else
-      msg.send '3'
-      sleeper.sleep(1)
-      msg.send '2'
-      sleeper.sleep(1)
-      msg.send '1'
-      sleeper.sleep(1)
-      msg.send words[parseInt(Math.random()*2, 10)]
-    robot.brain.set 'question', words
+      step(
+        ()->
+          msg.send '3'
+          setTimeout @, 1000
+          return
+        ()->
+          msg.send '2'
+          setTimeout @, 1000
+          return
+        ()->
+          msg.send '1'
+          setTimeout @, 1000
+          return
+        ()->
+          msg.send words[parseInt(Math.random()*2, 10)]
+          return
+      )
+      robot.brain.set 'question', words
 
